@@ -46,12 +46,16 @@ export function ContactSection() {
     href?: string;
   }[];
 
-  const socialEntries = [
-    { url: socials.instagram, label: "Instagram", handle: "Instagram", Icon: Instagram },
-    { url: socials.linkedin, label: "LinkedIn", handle: "LinkedIn", Icon: Linkedin },
-    { url: socials.github, label: "GitHub", handle: "GitHub", Icon: Github },
-    { url: socials.discord, label: "Discord community", handle: "Discord", Icon: MessageCircle },
-  ].filter((s): s is { url: string; label: string; handle: string; Icon: typeof Instagram } =>
+  /* Cast widens the `null` literals from eventConfig socials before the
+     filter predicate narrows them (TS cannot infer this transition). */
+  const socialEntries = (
+    [
+      { url: socials.instagram, label: "Instagram", handle: "Instagram", Icon: Instagram },
+      { url: socials.linkedin, label: "LinkedIn", handle: "LinkedIn", Icon: Linkedin },
+      { url: socials.github, label: "GitHub", handle: "GitHub", Icon: Github },
+      { url: socials.discord, label: "Discord community", handle: "Discord", Icon: MessageCircle },
+    ] as { url: string | null; label: string; handle: string; Icon: typeof Instagram }[]
+  ).filter((s): s is { url: string; label: string; handle: string; Icon: typeof Instagram } =>
     Boolean(s.url)
   );
 

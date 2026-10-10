@@ -152,44 +152,51 @@ Both buttons stay **disabled** until a valid date is configured.
 
 The wizard lives in `src/components/registration/`:
 
-- **Step 1 — Personal**: name, email, optional phone, college, academic year, optional portfolio URL
+- **Step 1 — Personal**: name, email, **mandatory 10-digit contact number**, college, academic year, optional portfolio URL
 - **Step 2 — Participation**: Individual / Team mode cards; team name + size (2–4) appear only for teams; preferred track; optional idea description
 - **Step 3 — Teammates**: shown only for teams; teammate fields stay in sync with the chosen team size; individuals skip this step entirely (forward *and* back navigation)
-- **Step 4 — Review**: grouped summary with per-section **Edit** jump buttons; consent checkbox linking to the rules; demo-mode notice
+- **Step 4 — Review**: grouped summary with per-section **Edit** jump buttons; consent checkbox linking to the rules; backend notice explaining where the data goes
 
-Validation (`src/lib/validation.ts`, Zod + React Hook Form):
+Validation (`src/lib/validation.ts`, Zod + React Hook Form — the **same schema is re-applied server-side** in `src/app/api/register/route.ts`):
 
 - Each step validates only its own fields before continuing
+- **Phone number is mandatory and must be exactly 10 digits** (Indian mobile format). The input only accepts digits, caps at 10 characters, and auto-unwraps pasted values like `+91 98765 43210` or `098765 43210` into a clean `9876543210`
 - Field-specific, friendly error messages (invalid email/URL, required fields, team-size limits)
 - Teammate emails must be valid **and different from the lead participant's email**
 - Enter key advances the wizard instead of submitting early
 - Submit button shows a spinner and is disabled while processing (no double submissions)
 - Data is preserved when navigating between steps and when the dialog is closed without submitting
 
-### Demo Registration & Local Storage
+### Registration Backend & Confirmation Emails
 
-With no backend credentials, the site runs in **demo mode** (`src/lib/registrationService.ts`):
+Registrations POST to `/api/register` (`src/app/api/register/route.ts`), which:
 
-- Submissions are stored in the browser's `localStorage` under `devsprint36.demo.registrations`
-- A visible notice in the form and success screen explains that entries stay **in this browser** and are **not sent to organizers**
-- Duplicate email addresses are rejected with a clear error ("already registered in this browser")
-- A reference code like `DS36-K7QM4T` is generated locally per submission
-- **No email is sent** — the success screen says so explicitly
-- Form data is cleared after a successful registration closes
+1. **Re-validates the payload** with the same Zod schema used in the browser (defense in depth), including the 10-digit phone rule and `+91` normalization
+2. **Rejects duplicates** — one registration per email address (case-insensitive, enforced by a unique index in SQLite)
+3. **Persists the record** to SQLite via Prisma (`Registration` model in `prisma/schema.prisma`) with a generated reference like `DS36-K7QM4T`
+4. **Composes a branded confirmation email** containing the *complete* registration info — reference, name, email, phone, college, academic year, portfolio, participation mode, team name/size, track, idea, teammates, event details and the consent timestamp (`src/lib/email-template.ts`; every user value is HTML-escaped)
+5. **Delivers it via SMTP** (nodemailer) when credentials are configured; otherwise the email is stored in the `EmailOutbox` table so it can be previewed and delivered later
 
-### Connecting a Real Backend Later
+The success screen reports the email status honestly — `sent`, `outbox` (awaiting SMTP), `failed` (registration saved; delivery errored) or `demo` — and links to `/api/register/email-preview/[token]`, which renders the exact composed email.
 
-The service implements the `RegistrationService` interface:
+#### Enabling real email delivery
 
-```ts
-export interface RegistrationService {
-  readonly isDemo: boolean;
-  submit(data: RegistrationData): Promise<SubmitResult>;
-  list(): RegistrationRecord[];
-}
+Set these in `.env` (see the commented block there):
+
+```
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=registrations@yourdomain.edu
+SMTP_PASS=your-app-password
+MAIL_FROM="DEVSPRINT 36 <registrations@yourdomain.edu>"
 ```
 
-To integrate a backend: create a class implementing this interface with `fetch()` calls to your API route, then swap the exported instance at the bottom of `src/lib/registrationService.ts`. No UI changes are needed. Recommended server-side work: validate payloads again server-side, rate-limit, persist to a database, send confirmation emails, and keep secrets in environment variables.
+No code changes are needed — `src/lib/mailer.ts` detects the credentials and switches from outbox mode to live sending. For Gmail, use an App Password (not your login password).
+
+#### Offline fallback
+
+If the backend is unreachable (e.g. the dev server is down), the client falls back to storing the registration in the browser's `localStorage` so the site keeps working; the success screen then says so clearly and no email is claimed. Duplicate checking in fallback mode applies to that browser's local records.
 
 ## Deployment
 
@@ -214,8 +221,10 @@ Before going live, set `siteConfig.seo.canonicalUrl` and `siteConfig.seo.shareIm
 
 ## Known Limitations
 
-- Registrations are **demo-only** (browser localStorage) until a backend is connected
-- No confirmation emails are sent in demo mode
+- Confirmation emails are **composed and stored but not delivered** until SMTP credentials are set in `.env` (outbox mode — preview link provided in the meantime)
+- Email previews are guarded by an unguessable per-registration token; treat the URL as semi-private
+- SQLite is fine for a single-instance deployment; switch the Prisma `datasource` to Postgres for hosted/multi-instance setups
+- Rate limiting on `/api/register` is not implemented — add middleware before a public launch
 - Mentors, judges and sponsors sections intentionally render "coming soon" states until verified data is added
 - The prize pool is labeled *illustrative* until `prizePoolConfirmed` is set
 - Add-to-Calendar requires a configured `startDate`

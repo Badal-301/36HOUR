@@ -30,3 +30,51 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+/* ── DEVSPRINT 36 registration backend ─────────────────────── */
+
+model Registration {
+  id            String   @id @default(cuid())
+  reference     String   @unique
+  fullName      String
+  email         String
+  /** Lowercased email for a case-insensitive uniqueness check (SQLite). */
+  emailLower    String   @unique
+  /** Mandatory 10-digit mobile number. */
+  phone         String
+  college       String
+  academicYear  String
+  portfolioUrl  String   @default("")
+  /** "Individual" | "Team" */
+  mode          String
+  teamName      String   @default("")
+  teamSize      Int
+  trackId       String
+  idea          String   @default("")
+  teammates     Json
+  agreedToRules Boolean  @default(false)
+  /** "sent" (delivered via SMTP) | "outbox" (composed, awaiting SMTP config) | "failed" */
+  emailStatus   String   @default("outbox")
+  submittedAt   DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([trackId])
+  @@index([mode])
+}
+
+/** Composed confirmation emails. Served at /api/register/email-preview/[token]. */
+model EmailOutbox {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  toEmail   String
+  subject   String
+  html      String
+  text      String
+  reference String
+  /** "outbox" | "sent" | "failed" */
+  status    String   @default("outbox")
+  createdAt DateTime @default(now())
+
+  @@index([reference])
+}

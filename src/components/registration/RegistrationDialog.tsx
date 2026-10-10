@@ -28,6 +28,7 @@ import {
 import {
   DEMO_MODE_NOTICE,
   registrationService,
+  type EmailStatus,
 } from "@/lib/registrationService";
 import { useRegistrationStore } from "@/lib/registration-store";
 import type { RegistrationData } from "@/types/event";
@@ -40,7 +41,11 @@ export function RegistrationDialog() {
   const { isOpen, presetTrackId, openId, close } = useRegistrationStore();
   const { toast } = useToast();
   const [step, setStep] = useState<0 | 1 | 2 | 3>(0);
-  const [submitted, setSubmitted] = useState<{ reference: string } | null>(null);
+  const [submitted, setSubmitted] = useState<{
+    reference: string;
+    emailStatus: EmailStatus;
+    emailPreviewUrl?: string;
+  } | null>(null);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
 
   const form = useForm<RegistrationFormValues>({
@@ -127,7 +132,11 @@ export function RegistrationDialog() {
     const result = await registrationService.submit(data);
 
     if (result.ok) {
-      setSubmitted({ reference: result.reference });
+      setSubmitted({
+        reference: result.reference,
+        emailStatus: result.emailStatus,
+        emailPreviewUrl: result.emailPreviewUrl,
+      });
       return;
     }
 
@@ -175,6 +184,8 @@ export function RegistrationDialog() {
         {submitted ? (
           <RegistrationSuccess
             reference={submitted.reference}
+            emailStatus={submitted.emailStatus}
+            emailPreviewUrl={submitted.emailPreviewUrl}
             values={form.getValues()}
             onDone={handleDialogClose}
           />

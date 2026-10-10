@@ -110,7 +110,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <Button
-            onClick={openRegistration}
+            onClick={() => openRegistration()}
             className="hidden font-semibold sm:inline-flex"
             aria-label="Register for DEVSPRINT 36 (opens registration form)"
           >

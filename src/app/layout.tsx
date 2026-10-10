@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.seo.description,
-  keywords: siteConfig.seo.keywords,
+  keywords: [...siteConfig.seo.keywords],
   authors: [{ name: eventConfig.organizer.name }],
   ...(siteConfig.seo.shareImageUrl
     ? {

@@ -14,7 +14,13 @@ import {
 type Tile = { label: string; value: string; dim?: boolean };
 
 function buildTiles(state: ReturnType<typeof useCountdown>): Tile[] {
-  if (state.status === "unconfigured" || state.status === "loading") {
+  if (
+    state.status === "unconfigured" ||
+    state.status === "loading" ||
+    /* After the event ends the countdown fields are absent — show
+       dimmed tiles instead of rendering "undefined". */
+    state.status === "ended"
+  ) {
     return [
       { label: "Days", value: "––", dim: true },
       { label: "Hours", value: "––", dim: true },

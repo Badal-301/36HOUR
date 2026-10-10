@@ -28,7 +28,7 @@ import {
   FormDescription,
 } from "@/components/ui/form";
 import type { RegistrationFormValues } from "@/lib/validation";
-import { academicYears } from "@/lib/validation";
+import { academicYears, normalizePhoneInput } from "@/lib/validation";
 import { tracks } from "@/data/tracks";
 import { eventConfig } from "@/config/event";
 import { cn } from "@/lib/utils";
@@ -87,21 +87,28 @@ export function PersonalStep({ form }: { form: Form }) {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                Contact number{" "}
-                <span className="font-normal text-muted-foreground">
-                  (optional)
-                </span>
-              </FormLabel>
+              <FormLabel>Contact number</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="tel"
-                  inputMode="tel"
-                  autoComplete="tel"
-                  placeholder="+91 98765 43210"
+                  inputMode="numeric"
+                  autoComplete="tel-national"
+                  maxLength={10}
+                  placeholder="10-digit mobile number"
+                  onChange={(event) => {
+                    const digits = normalizePhoneInput(event.target.value);
+                    /* Write back to the DOM so stripped keystrokes (e.g. letters)
+                       never linger when React skips a re-render on equal values. */
+                    event.target.value = digits;
+                    field.onChange(digits);
+                  }}
                 />
               </FormControl>
+              <FormDescription>
+                Exactly 10 digits, e.g. 9876543210 — we only use it for event-day
+                coordination.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -370,7 +377,7 @@ export function ParticipationStep({ form }: { form: Form }) {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Preferred track</FormLabel>
-            <Select value={field.value || undefined} onValueChange={field.onChange}>
+            <Select value={field.value ?? ""} onValueChange={field.onChange}>
               <FormControl>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Choose a track" />
@@ -581,7 +588,7 @@ export function ReviewStep({
         <dl className="mt-2">
           <ReviewRow label="Full name" value={values.fullName} />
           <ReviewRow label="Email" value={values.email} />
-          {values.phone && <ReviewRow label="Contact" value={values.phone} />}
+          <ReviewRow label="Contact" value={values.phone} />
           <ReviewRow label="College" value={values.college} />
           <ReviewRow label="Academic year" value={values.academicYear} />
           {values.portfolioUrl && (

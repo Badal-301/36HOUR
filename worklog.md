@@ -40,3 +40,23 @@ Verification (agent-browser, RalphLoop):
 Stage Summary:
 - Complete DEVSPRINT 36 site delivered on / route, all spec checklist items verified in browser
 - README.md documents setup, config editing, countdown/registration mechanics, backend integration path, deployment, a11y notes, limitations
+
+---
+Task ID: 18-20
+Agent: main (Super Z)
+Task: Post-delivery iteration — (1) mandatory 10-digit phone, (2) confirmation email with complete registration info, (3) fix remaining bugs. Methodology: GSD (spec) → RooCode (implement) → CodeRabbit (review) → RalphLoop (browser verify).
+
+Work Log:
+- Phone: zod schema now requires exactly 10 digits; added normalizePhoneInput() that strips non-digits and unwraps +91/0 prefixes; UI input is digits-only, maxLength 10, inputMode numeric, writes normalized value back to DOM (RHF controlled-input pitfall); Review step always shows Contact row
+- Backend: Prisma Registration + EmailOutbox models (db push); POST /api/register re-validates with the same zod schema server-side (incl. phone normalization), case-insensitive duplicate rejection via emailLower unique index, reference retry on P2002; GET /api/register/email-preview/[token] serves the exact composed email
+- Email: email-template.ts composes branded HTML + plain-text confirmation with COMPLETE registration info (reference, personal block, participation/team block, teammates, event details, consent timestamp); every user value HTML-escaped (XSS-tested with <script> payload — escaped); mailer.ts sends via nodemailer when SMTP_HOST/USER/PASS set, else outbox mode; .env documents SMTP config
+- Frontend: ApiRegistrationService (fetch POST /api/register) with localStorage demo fallback on network failure; SubmitSuccess extended with emailStatus (sent|outbox|failed|demo) + emailPreviewUrl; RegistrationSuccess rewritten — email status banner, "View the confirmation email" link, complete summary incl. phone/college/year, teammates block; dialog notice reworded for backend mode
+- Bug fixes (CodeRabbit pass, tsc 0 errors / eslint 0 warnings): Navbar/HeroSection/FinalCTA onClick={openRegistration} passed MouseEvent as trackId preset (real user-facing bug); countdown "ended" state rendered undefined tiles; Footer/ContactSelect null-literal predicate type errors; layout.tsx readonly keywords; Prisma Json cast in route; tsconfig excludes scaffold dirs
+- Bug fix found in RalphLoop: track Select uncontrolled→controlled React warning → value={field.value ?? ""}
+- RalphLoop (agent-browser): empty phone → "Contact number is required"; "abc+91" → filtered to "91"; 9 digits rejected; valid 10 digits pass; +91 98765 43210 normalized server-side; individual golden path → success + DS36-DX77F7 + outbox banner + preview link rendering all fields; team API registration → email contains team name, Member 2/3, idea; duplicate email rejected in UI (field error + step jump) and API (case-insensitive); track-card preset path verified (Campus Innovation preselected); navbar Register opens clean (no garbage preset); console clean, no page errors; test data cleaned from DB (0 rows remaining)
+
+Stage Summary:
+- Registration is now a real backend flow: SQLite persistence + confirmation email with complete info (SMTP-ready, outbox preview until credentials set)
+- Phone = mandatory, exactly 10 digits, auto-normalized (client + server)
+- 10 pre-existing/new bugs fixed; tsc/eslint/dev.log/console all clean
+- README updated (backend flow, SMTP setup, offline fallback, limitations)

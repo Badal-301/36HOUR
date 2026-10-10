@@ -17,8 +17,25 @@ export const academicYears = [
   "Postgraduate / Research",
 ] as const;
 
-/** Loose but sane phone pattern: optional, allows +91 / 0 prefixes, spaces, dashes. */
-const phonePattern = /^[+]?[0-9][0-9\s\-()]{6,17}$/;
+/** Phone is mandatory and must contain exactly 10 digits (Indian mobile format). */
+const phonePattern = /^[0-9]{10}$/;
+
+/**
+ * Normalizes raw phone input into a plain 10-digit string:
+ * strips everything except digits, unwraps a leading "+91" / "91" (12 digits)
+ * or "0" (11 digits) trunk prefix, and caps the result at 10 digits.
+ * Used by the phone input so pasted values like "+91 98765 43210" land
+ * cleanly as "9876543210".
+ */
+export function normalizePhoneInput(raw: string): string {
+  let digits = raw.replace(/\D/g, "");
+  if (digits.length === 12 && digits.startsWith("91")) {
+    digits = digits.slice(2);
+  } else if (digits.length === 11 && digits.startsWith("0")) {
+    digits = digits.slice(1);
+  }
+  return digits.slice(0, 10);
+}
 
 export const registrationSchema = z
   .object({
@@ -31,8 +48,9 @@ export const registrationSchema = z
     phone: z
       .string()
       .trim()
-      .refine((v) => v === "" || phonePattern.test(v), {
-        message: "Enter a valid contact number, e.g. +91 98765 43210",
+      .min(1, "Contact number is required")
+      .refine((v) => phonePattern.test(v), {
+        message: "Enter a valid 10-digit mobile number (digits only, e.g. 9876543210)",
       }),
     college: z.string().trim().min(3, "Your college or institution is required"),
     academicYear: z.enum(academicYears, {

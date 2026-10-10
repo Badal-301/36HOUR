@@ -1,31 +1,37 @@
 import type { RegistrationData, RegistrationRecord } from "@/types/event";
+import { generateReference } from "@/lib/reference";
 
 /**
  * ─────────────────────────────────────────────────────────────
  *  REGISTRATION SERVICE (adapter pattern)
  * ─────────────────────────────────────────────────────────────
- *  Currently runs in DEMO MODE: registrations are stored in the
- *  browser's localStorage ONLY. Nothing is sent to a server and
- *  organizers do not receive any data.
+ *  PRIMARY: POSTs the registration to /api/register, which
+ *  persists it to SQLite and sends the confirmation email with
+ *  the complete registration info to the student.
  *
- *  To connect a real backend later, implement the
- *  `RegistrationService` interface with fetch() calls to your
- *  API and swap the exported instance at the bottom of this file.
- *  The UI does not change.
+ *  FALLBACK: if the backend is unreachable (network error), the
+ *  registration is stored in this browser's localStorage so the
+ *  site keeps working — the success screen then says so clearly.
  * ─────────────────────────────────────────────────────────────
  */
 
 export const DEMO_MODE_NOTICE =
-  "Demo mode: registrations are stored only in this browser and are not automatically submitted to the organizers.";
+  "On submit, your registration is recorded by the DEVSPRINT 36 backend and a confirmation email with your complete registration details is sent to your registered email address.";
+
+export type EmailStatus = "sent" | "outbox" | "failed" | "demo";
 
 export interface SubmitSuccess {
   ok: true;
   reference: string;
+  /** How the confirmation email was handled. */
+  emailStatus: EmailStatus;
+  /** Path to preview the exact composed email (not available in demo mode). */
+  emailPreviewUrl?: string;
 }
 
 export interface SubmitFailure {
   ok: false;
-  error: "duplicate" | "storage" | "network";
+  error: "duplicate" | "storage" | "network" | "validation" | "server";
   message: string;
 }
 
@@ -41,26 +47,6 @@ export interface RegistrationService {
 const STORAGE_KEY = "devsprint36.demo.registrations";
 const SIMULATED_DELAY_MS = 900;
 
-const REFERENCE_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"; // unambiguous chars
-
-/** Generates a demo registration reference like "DS36-K7QM4T". */
-export function generateReference(): string {
-  let code = "";
-  const cryptoObj = typeof crypto !== "undefined" ? crypto : undefined;
-  if (cryptoObj?.getRandomValues) {
-    const bytes = new Uint8Array(6);
-    cryptoObj.getRandomValues(bytes);
-    bytes.forEach((b) => {
-      code += REFERENCE_ALPHABET[b % REFERENCE_ALPHABET.length];
-    });
-  } else {
-    for (let i = 0; i < 6; i++) {
-      code += REFERENCE_ALPHABET[Math.floor(Math.random() * REFERENCE_ALPHABET.length)];
-    }
-  }
-  return `DS36-${code}`;
-}
-
 function isBrowserStorageAvailable(): boolean {
   try {
     const probe = "__ds36_probe__";
@@ -72,11 +58,12 @@ function isBrowserStorageAvailable(): boolean {
   }
 }
 
+/** localStorage fallback — used only when the backend is unreachable. */
 class DemoRegistrationService implements RegistrationService {
   readonly isDemo = true;
 
   async submit(data: RegistrationData): Promise<SubmitResult> {
-    // Simulated network latency so loading states are exercised honestly.
+    // Simulated latency so loading states are exercised honestly.
     await new Promise((resolve) => setTimeout(resolve, SIMULATED_DELAY_MS));
 
     if (!isBrowserStorageAvailable()) {
@@ -84,21 +71,21 @@ class DemoRegistrationService implements RegistrationService {
         ok: false,
         error: "storage",
         message:
-          "Browser storage is unavailable (private mode?), so the demo registration cannot be saved in this browser.",
+          "The registration backend is unreachable and browser storage is unavailable, so the registration could not be saved.",
       };
     }
 
     const existing = this.list();
     const duplicate = existing.some(
       (record) =>
-        record.email.trim().toLowerCase() === data.email.trim().toLowerCase()
+        record.email.trim().toLowerCase() === data.email.trim().toLowerCase(),
     );
     if (duplicate) {
       return {
         ok: false,
         error: "duplicate",
         message:
-          "This email address is already registered in this browser. Each participant should register once.",
+          "This email address is already registered. Each participant should register once.",
       };
     }
 
@@ -111,17 +98,17 @@ class DemoRegistrationService implements RegistrationService {
     try {
       window.localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify([...existing, record])
+        JSON.stringify([...existing, record]),
       );
     } catch {
       return {
         ok: false,
         error: "storage",
-        message: "Could not save the demo registration. Local storage may be full.",
+        message: "Could not save the registration. Local storage may be full.",
       };
     }
 
-    return { ok: true, reference: record.reference };
+    return { ok: true, reference: record.reference, emailStatus: "demo" };
   }
 
   list(): RegistrationRecord[] {
@@ -138,6 +125,67 @@ class DemoRegistrationService implements RegistrationService {
   }
 }
 
-/* Swap this instance to integrate a real backend (same interface). */
+/** Primary adapter — talks to the Next.js API route. */
+class ApiRegistrationService implements RegistrationService {
+  readonly isDemo = false;
+  private readonly fallback = new DemoRegistrationService();
+
+  async submit(data: RegistrationData): Promise<SubmitResult> {
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const json: unknown = await response.json().catch(() => null);
+
+      if (response.ok && json && typeof json === "object" && "reference" in json) {
+        const result = json as {
+          reference: string;
+          emailStatus?: EmailStatus;
+          emailPreviewUrl?: string;
+        };
+        return {
+          ok: true,
+          reference: result.reference,
+          emailStatus: result.emailStatus ?? "outbox",
+          emailPreviewUrl: result.emailPreviewUrl,
+        };
+      }
+
+      if (json && typeof json === "object" && "message" in json) {
+        const failure = json as { error?: SubmitFailure["error"]; message?: string };
+        return {
+          ok: false,
+          error:
+            failure.error === "duplicate" ||
+            failure.error === "validation" ||
+            failure.error === "server"
+              ? failure.error
+              : "server",
+          message:
+            failure.message ?? "The registration could not be submitted.",
+        };
+      }
+
+      return {
+        ok: false,
+        error: "server",
+        message: `The registration backend returned an unexpected response (${response.status}).`,
+      };
+    } catch {
+      // Network-level failure — the API route is unreachable.
+      return this.fallback.submit(data);
+    }
+  }
+
+  list(): RegistrationRecord[] {
+    /* The authoritative record list lives in the server database;
+       expose any locally saved fallback entries for inspection. */
+    return this.fallback.list();
+  }
+}
+
 export const registrationService: RegistrationService =
-  new DemoRegistrationService();
+  new ApiRegistrationService();

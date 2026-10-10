@@ -101,7 +101,7 @@ export function HeroSection() {
             >
               <Button
                 size="lg"
-                onClick={openRegistration}
+                onClick={() => openRegistration()}
                 className="h-12 px-7 text-base font-semibold"
                 aria-label="Register your team for DEVSPRINT 36 (opens registration form)"
               >

@@ -66,7 +66,7 @@ export function FinalCTA() {
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button
               size="lg"
-              onClick={openRegistration}
+              onClick={() => openRegistration()}
               className="h-12 px-8 text-base font-semibold"
               aria-label="Join DEVSPRINT 36 (opens registration form)"
             >

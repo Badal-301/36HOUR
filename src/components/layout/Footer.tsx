@@ -24,12 +24,18 @@ export function Footer() {
   const year = new Date().getFullYear();
   const { socials, links, contactEmail } = eventConfig;
 
-  const socialEntries = [
-    { url: socials.instagram, label: "Instagram", Icon: Instagram },
-    { url: socials.linkedin, label: "LinkedIn", Icon: Linkedin },
-    { url: socials.github, label: "GitHub", Icon: Github },
-    { url: socials.discord, label: "Discord community", Icon: MessageCircle },
-  ].filter((s): s is { url: string; label: string; Icon: typeof Instagram } => Boolean(s.url));
+  /* Cast widens the `null` literals from eventConfig socials before the
+     filter predicate narrows them (TS cannot infer this transition). */
+  const socialEntries = (
+    [
+      { url: socials.instagram, label: "Instagram", Icon: Instagram },
+      { url: socials.linkedin, label: "LinkedIn", Icon: Linkedin },
+      { url: socials.github, label: "GitHub", Icon: Github },
+      { url: socials.discord, label: "Discord community", Icon: MessageCircle },
+    ] as { url: string | null; label: string; Icon: typeof Instagram }[]
+  ).filter((s): s is { url: string; label: string; Icon: typeof Instagram } =>
+    Boolean(s.url)
+  );
 
   return (
     <footer className="mt-auto border-t border-border bg-surface/60">
