@@ -1,0 +1,866 @@
+# PROJECT: DEVSPRINT 36 — COMPLETE 36-HOUR HACKATHON WEBSITE
+
+Act as a senior UI/UX designer, full-stack developer, frontend architect, and product designer. Design and develop a complete, polished, production-quality hackathon website for a college technology club associated with Google Developer communities.
+
+Do not just create a visual mockup or a simple static landing page. Build a functional, responsive website with realistic content, clear navigation, working interactions, a registration flow, and clean, organized code.
+
+The project should look impressive during a technical club evaluation and demonstrate creativity, problem-solving, usability, functionality, responsiveness, and thoughtful technical decisions.
+
+## 1. PROJECT IDENTITY
+
+Hackathon name: DEVSPRINT 36
+
+Tagline: 36 Hours. One Big Idea. Infinite Possibilities.
+
+Theme: Build Beyond Limits.
+
+Concept: A high-energy, student-focused innovation hackathon where participants collaborate for 36 hours to solve real-world problems using software development, artificial intelligence, web technologies, and creative problem-solving.
+
+Organizer: GDG on Campus [College Name] / [Actual Club Name]
+
+Location: [College Name, City, India]
+
+Event date: [To be announced]
+
+Registration deadline: [To be announced]
+
+Team size: 1–4 participants.
+
+Event duration: 36 hours.
+
+Total illustrative prize pool: ₹30,000.
+
+Treat all dates, venues, contact details, prize amounts, organizer names, sponsors, and registration deadlines as editable event configuration. Never present an unconfirmed sponsor, address, phone number, or registration date as real.
+
+The website must make sense even before event details are finalized. Display “Coming Soon” or “To Be Announced” wherever information has not been supplied.
+
+## 2. TECHNOLOGY STACK
+
+Use the following stack unless the existing project already uses a compatible one:
+
+- React with TypeScript.
+- Vite for the development environment and build system.
+- Tailwind CSS for styling.
+- Lucide React for icons.
+- React Router if multiple routes are required.
+- Framer Motion for subtle, purposeful animations.
+- React Hook Form and Zod for accessible form validation, if appropriate.
+
+Prefer reusable components, semantic HTML, centralized configuration, and strongly typed data.
+
+Do not introduce unnecessary backend frameworks, complex dependencies, or paid services.
+
+If working inside an existing repository, inspect its structure and package configuration before changing anything. Preserve useful existing work and follow its established conventions.
+
+## 3. VISUAL DESIGN AND BRAND IDENTITY
+
+Create a distinctive, premium, developer-oriented visual identity.
+
+Overall feeling:
+- Futuristic and technical without looking like a generic AI-generated template.
+- Bold, experimental, youthful, innovative, and professional.
+- A mix of editorial typography, clean layouts, technical grids, geometric elements, and modern product-design aesthetics.
+- Visually impressive but easy to read and navigate.
+
+Color palette:
+- Primary background: #0B0D12.
+- Elevated surfaces: #131722.
+- Secondary surfaces: #191E29.
+- Primary accent: #C6FF4D, acid green.
+- Secondary accent: #8B82FF, electric violet.
+- Supporting accent: #48D8E8, cyan.
+- Primary text: #F6F7FB.
+- Secondary text: #A5AAB8.
+- Borders: subtle charcoal-gray.
+
+Use the bright accent color for important CTAs, selected states, small indicators, and highlights. Do not cover every section in bright gradients.
+
+Typography:
+- Space Grotesk for headings.
+- Inter for body text and interface elements.
+- Use sensible system-font fallbacks.
+- Large, expressive headings; readable body text; consistent line heights; clear typographic hierarchy.
+
+Visual elements:
+- Subtle grid backgrounds and thin technical lines.
+- Oversized typography and selected monospace labels.
+- Abstract CSS-generated geometric artwork.
+- Small animated dots, progress indicators, and line patterns.
+- Track-specific illustrations using CSS, icons, or lightweight SVGs.
+- Cards with restrained borders, rounded corners, and subtle hover effects.
+- Generous spacing and strong alignment.
+
+Avoid:
+- Generic stock photography.
+- Too many floating cards.
+- Excessive glassmorphism.
+- Excessive gradients and glowing effects.
+- Constant animations.
+- Fake sponsors or fabricated testimonials.
+- Broken external images or placeholder links disguised as real destinations.
+- Unnecessary horizontal scrolling.
+
+Create a custom abstract DEVSPRINT 36 mark using text, CSS, or SVG. Do not fabricate an official Google logo or imply a partnership or endorsement that has not been confirmed. Use the club's actual approved branding if supplied.
+
+The website should feel custom-designed rather than like a minimally modified template.
+
+## 4. WEBSITE ARCHITECTURE
+
+Build the website as one cohesive experience with these sections:
+
+1. Sticky navigation.
+2. Hero section.
+3. Live countdown and event statistics.
+4. About the hackathon.
+5. Tracks and problem statements.
+6. 36-hour schedule.
+7. Prizes and rewards.
+8. Judging criteria.
+9. Registration and participation steps.
+10. Rules and guidelines.
+11. Mentors, judges, and partners.
+12. Frequently asked questions.
+13. Contact and social media.
+14. Final call-to-action.
+15. Footer.
+
+Use anchored navigation for a single-page experience. Add dedicated registration, success, or other routes only when they improve usability.
+
+The site must remain understandable when optional sections have no confirmed data. For example, never invent mentor profiles or sponsor logos. Hide optional profile cards when no data has been provided, or show a clear “Announcements Coming Soon” state.
+
+## 5. NAVIGATION BAR
+
+Create a polished, sticky header.
+
+Left:
+- DEVSPRINT 36 logo/wordmark.
+- Small event indicator.
+
+Center/right navigation:
+- Overview
+- Tracks
+- Schedule
+- Prizes
+- Rules
+- FAQ
+
+Primary navigation button:
+“Register Now ↗”
+
+Requirements:
+- Smooth scrolling to sections.
+- Active-section indication when useful.
+- Functional mobile hamburger menu.
+- Close the mobile menu after navigation.
+- Keyboard navigation and visible focus states.
+- Subtle background or border change on scroll.
+- Appropriate spacing at desktop, tablet, and mobile widths.
+
+Keep the header compact and ensure that anchor targets are not hidden beneath it.
+
+## 6. HERO SECTION
+
+Create a high-impact hero that immediately explains what the event is.
+
+Eyebrow:
+“THE ULTIMATE 36-HOUR BUILD SPRINT”
+
+Main headline, arranged creatively across lines:
+
+“36 HOURS.
+ONE BIG IDEA.
+INFINITE POSSIBILITIES.”
+
+Supporting text:
+“Bring your ideas, find your people, and turn bold concepts into working solutions. Build something meaningful, learn from mentors, and push your limits in 36 hours.”
+
+Primary button:
+“Register Your Team ↗”
+
+Secondary button:
+“Explore the Challenges ↓”
+
+Display concise event information:
+- Event date or “Date Coming Soon.”
+- Venue or “Venue To Be Announced.”
+- Team size: 1–4.
+- Event format, configurable as in-person, online, or hybrid.
+
+Create a custom hero visual featuring a large stylized “36”, geometric forms, a terminal-inspired panel, or a simulated project blueprint. This can be rendered with CSS or SVG rather than requiring large images.
+
+The hero should occupy a meaningful part of the initial screen without hiding the event information or pushing the main CTA too far down.
+
+Include a discreet scroll indicator.
+
+## 7. COUNTDOWN AND EVENT STATS
+
+Add a premium countdown block containing:
+- Days.
+- Hours.
+- Minutes.
+- Seconds.
+
+Requirements:
+- Calculate the countdown from the configured event start date.
+- Update it once per second.
+- Correctly handle timezone offsets.
+- Display “Event Date Coming Soon” when no valid date has been configured.
+- Never use a hard-coded countdown that appears to be live.
+- Show “The build sprint has started” during the event and “The event has ended” afterward when appropriate.
+- Clean up timers when the component unmounts.
+
+Below the countdown, show editable event statistics, such as:
+- 36 hours of building.
+- 5 innovation tracks.
+- Teams of up to 4.
+- ₹30,000 illustrative prize pool.
+
+Do not claim a participant count, mentor count, sponsor count, or registration total unless real data is supplied.
+
+## 8. ABOUT THE HACKATHON
+
+Heading:
+“More Than a Hackathon.”
+
+Description:
+“DEVSPRINT 36 is a collaborative innovation sprint that challenges students to identify meaningful problems, experiment with technology, and create working prototypes. Whether you are exploring AI, building your first website, or developing your next ambitious product, this is a place to learn by building.”
+
+Create three editorial content blocks:
+
+BUILD WITH PURPOSE
+Build useful prototypes that address genuine user needs instead of developing features without a clear problem.
+
+LEARN BY DOING
+Experiment with new tools, APIs, frameworks, and development workflows while learning from other builders.
+
+COLLABORATE AND GROW
+Work with teammates, exchange feedback, meet mentors, and learn how to present a technical solution.
+
+Add a short “Who should participate?” section for students interested in software development, AI/ML, product design, cybersecurity, data, and innovation.
+
+Explain that beginners can participate and that prior hackathon experience is not mandatory.
+
+Use a visually interesting layout rather than three identical generic cards.
+
+## 9. TRACKS AND PROBLEM STATEMENTS
+
+Create five track cards with individual colors, icons, concise descriptions, and example challenges.
+
+TRACK 1 — AI FOR GOOD
+Icon: BrainCircuit.
+
+Description:
+“Build responsible, useful AI solutions for everyday problems.”
+
+Example problem statement:
+Create an AI-assisted solution that improves education, accessibility, public services, or information discovery. Explain its data sources, limitations, evaluation method, and privacy considerations.
+
+Possible ideas:
+- Personalized learning assistant.
+- Accessibility support.
+- Document understanding.
+- Responsible misinformation detection.
+
+TRACK 2 — CAMPUS INNOVATION
+Icon: GraduationCap.
+
+Description:
+“Make student life smarter, easier, and more connected.”
+
+Example problem statement:
+Identify a recurring problem on campus and design a practical digital solution that improves the student experience.
+
+Possible ideas:
+- Campus navigation and discovery.
+- Student collaboration platform.
+- Lost-and-found management.
+- Campus resource or event discovery.
+
+TRACK 3 — CLIMATE AND SUSTAINABILITY
+Icon: Leaf.
+
+Description:
+“Use technology to make sustainable choices easier.”
+
+Example problem statement:
+Develop a prototype that helps individuals or institutions reduce waste, monitor resource usage, or make more sustainable decisions.
+
+Possible ideas:
+- Food-waste reduction.
+- Energy-use monitoring.
+- Water conservation.
+- Waste segregation assistance.
+
+TRACK 4 — DEVELOPER TOOLS AND OPEN SOURCE
+Icon: Terminal.
+
+Description:
+“Build tools that make developers more productive.”
+
+Example problem statement:
+Create a useful tool, application, API, or open-source improvement that removes friction from an existing development workflow.
+
+Possible ideas:
+- Debugging assistance.
+- API testing and visualization.
+- Developer productivity tools.
+- Documentation and code-quality utilities.
+
+TRACK 5 — OPEN INNOVATION
+Icon: Lightbulb.
+
+Description:
+“Find a problem worth solving and build your own solution.”
+
+Example problem statement:
+Choose a clearly defined user problem, research the need, and build a working prototype with a compelling explanation of its value.
+
+Every track must include:
+- Track name.
+- Icon.
+- Description.
+- Example challenge.
+- Three or four idea examples.
+- “Explore Track” or equivalent interaction.
+
+Add a track filter or selector where useful. Clicking a track card should reveal further details in an accessible modal, expandable panel, or dedicated section.
+
+Make it clear that these are example problem statements, unless the organizers provide official challenges.
+
+Add a call-to-action:
+“Found Your Track? Start Building.”
+
+## 10. EXACT 36-HOUR EVENT SCHEDULE
+
+Display the schedule as a visually appealing vertical timeline on desktop and an easy-to-scan timeline on mobile.
+
+The schedule must cover exactly 36 hours, beginning at 9:00 AM on Day 1 and ending at 9:00 PM on Day 2.
+
+DAY 1 — THE BUILD BEGINS
+
+8:00 AM–9:00 AM: Participant check-in and breakfast. This is pre-event arrival time and does not count toward the 36 hours.
+
+9:00 AM–10:00 AM: Opening ceremony, welcome, challenge reveal, and rules. Hour 0–1.
+
+10:00 AM–12:00 PM: Team formation, ideation, problem validation, and initial planning. Hour 1–3.
+
+12:00 PM–1:00 PM: Lunch and networking. Hour 3–4.
+
+1:00 PM–5:00 PM: Build Sprint 1 — initial development and prototype setup. Hour 4–8.
+
+5:00 PM–6:00 PM: Mentor office hours and technical guidance. Hour 8–9.
+
+6:00 PM–7:00 PM: Dinner break. Hour 9–10.
+
+7:00 PM–12:00 AM: Night Sprint — implementation and experimentation. Hour 10–15.
+
+DAY 2 — FROM PROTOTYPE TO DEMO
+
+12:00 AM–7:00 AM: Overnight build, team rest rotations, and optional mentor support. Hour 15–22.
+
+7:00 AM–8:00 AM: Breakfast and refresh break. Hour 22–23.
+
+8:00 AM–12:00 PM: Build Sprint 2 — core features and integrations. Hour 23–27.
+
+12:00 PM–1:00 PM: Lunch. Hour 27–28.
+
+1:00 PM–5:00 PM: Final development, testing, and user-experience improvements. Hour 28–32.
+
+5:00 PM–6:00 PM: Final submission deadline, README preparation, and demo setup. Hour 32–33.
+
+6:00 PM–8:00 PM: Project demonstrations and judging. Hour 33–35.
+
+8:00 PM–8:30 PM: Judges' deliberation and closing networking. Hour 35–35.5.
+
+8:30 PM–9:00 PM: Awards, acknowledgements, and closing ceremony. Hour 35.5–36.
+
+Display clear Day 1 and Day 2 separators and relative hour markers.
+
+Add a visible announcement:
+“The 36-hour event runs from Day 1 at 9:00 AM to Day 2 at 9:00 PM. Final project submissions close at 5:00 PM on Day 2 so judges can evaluate and review demos before the closing ceremony.”
+
+The schedule must be editable in a centralized configuration file. Make break periods visually distinct from major event milestones.
+
+## 11. PRIZES AND REWARDS
+
+Create a visually prominent prize section.
+
+Label the prize pool as illustrative until officially confirmed.
+
+GRAND CHAMPION
+₹15,000
+
+RUNNER-UP
+₹8,000
+
+SOCIAL IMPACT AWARD
+₹4,000
+
+BEST FIRST HACK
+₹3,000
+
+TOTAL ILLUSTRATIVE PRIZE POOL: ₹30,000
+
+Give the grand prize stronger visual emphasis, using a podium-like arrangement or a central award visual.
+
+Mention potential non-monetary benefits such as certificates, mentorship, community recognition, and opportunities to continue developing promising projects, subject to organizer confirmation.
+
+Do not guarantee internships, jobs, merchandise, or sponsor rewards that have not been confirmed.
+
+Add an editable section for future special prizes or sponsor awards. Hide it when empty.
+
+## 12. JUDGING CRITERIA
+
+Create a clear judging section showing both evaluation criteria and their respective weights.
+
+- Problem relevance and understanding: 25%.
+- Technical implementation: 25%.
+- Impact and innovation: 20%.
+- User experience and usability: 15%.
+- Demonstration and presentation: 15%.
+
+Total: 100%.
+
+Show the weights with an accessible horizontal bar visualization or a clear set of labeled progress bars. Each criterion should also have a short explanation.
+
+Explain that judges evaluate the submitted project, the clarity of the solution, its implementation, the team's decisions, and the quality of the demonstration.
+
+Clarify that the criteria are proposed guidelines that organizers may amend before publishing final rules.
+
+Do not invent judge names, credentials, or affiliations. Create an editable judges configuration that supports profiles once verified information is available.
+
+## 13. PARTICIPATION RULES AND GUIDELINES
+
+Create a readable rules section with expandable categories.
+
+ELIGIBILITY
+- Open to students, subject to the organizers' final eligibility conditions.
+- Individual participants and teams of up to four are allowed.
+- Beginners are welcome.
+
+PROJECT REQUIREMENTS
+- Projects should primarily be developed during the hackathon.
+- Existing libraries, frameworks, templates, and legitimate open-source tools may be used.
+- Clearly identify pre-existing components.
+- Teams must be able to explain and demonstrate their implementation.
+- Submit a working prototype or a meaningful proof of concept.
+
+AI AND THIRD-PARTY TOOLS
+- AI coding assistants and public APIs may be used unless the organizers publish different restrictions.
+- Participants remain responsible for the code they submit.
+- Disclose significant AI-generated or pre-existing contributions when requested by the organizers.
+- Never expose API keys, credentials, or confidential data in public repositories.
+
+SUBMISSION REQUIREMENTS
+- Project title and description.
+- Selected track.
+- GitHub repository or equivalent source link, when applicable.
+- Working demo link, where available.
+- README containing setup instructions, core features, technology stack, and relevant limitations.
+- Short presentation or demo following the organizers' submission format.
+
+CONDUCT
+- Treat all participants, volunteers, mentors, and judges respectfully.
+- No plagiarism, harassment, impersonation, or misuse of others' work.
+- Follow applicable open-source licenses, API terms, privacy requirements, and college venue rules.
+- Respect organizer decisions and event instructions.
+
+Make the language straightforward, professional, and student-friendly. Include a configurable link to the complete official rulebook and privacy notice.
+
+## 14. REGISTRATION FLOW — MUST BE FUNCTIONAL
+
+Build a complete registration experience, not just an inactive button.
+
+Use a dedicated registration page or accessible multi-step modal with a progress indicator. Keep the form visually consistent with the main website.
+
+STEP 1 — PERSONAL INFORMATION
+- Full name, required.
+- Email address, required.
+- Contact number, if required by the organizer.
+- College or institution, required.
+- Current academic year, required.
+- GitHub or portfolio URL, optional.
+
+STEP 2 — PARTICIPATION DETAILS
+- Participation mode: Individual or Team.
+- Team name, required for teams.
+- Team size: 1–4 participants.
+- Preferred hackathon track, required.
+- Short optional description of the team's idea or interests.
+
+STEP 3 — TEAM MEMBERS
+If the participant chooses Individual, hide team-specific fields.
+
+If the participant chooses Team, show the team name and fields for the additional members.
+
+Validate the team size and require the appropriate teammate details. Keep the member list synchronized with the selected team size. Do not require irrelevant teammate fields for an individual registration.
+
+STEP 4 — REVIEW AND SUBMIT
+- Display a review of the registration details.
+- Provide a back button to edit information.
+- Require acceptance of the event rules and privacy notice.
+- Include a clearly labeled final submission button.
+
+FORM FUNCTIONALITY
+- Real-time validation where appropriate.
+- Friendly, field-specific error messages.
+- Email and URL validation.
+- Required-field validation.
+- Loading state during submission.
+- Disabled submit button while processing.
+- Protection against accidental repeated submissions.
+- Success and failure states.
+- Fully keyboard-accessible fields and controls.
+- Preserve entered data when navigating between steps.
+- Clear sensitive form data appropriately after success or explicit reset.
+
+SUCCESS PAGE
+After a successful registration, show a clear confirmation screen with:
+- A confirmation message.
+- A registration reference generated for the demonstration.
+- The participant's submitted event information.
+- A button to return home.
+- A clear note explaining any limitation of the current demo registration system.
+
+Do not claim that an email was sent unless email integration has actually succeeded. Do not fabricate confirmed registration numbers, real registration status, or organizer notifications.
+
+DATA HANDLING
+If no backend credentials are provided, implement a clearly documented demo mode using browser local storage for local testing. Display a discreet notice that demo registrations are stored only in that browser and are not automatically submitted to the organizers.
+
+Keep the submission logic behind a service or adapter so that a real backend can be integrated later. Do not pretend local storage is a production registration database.
+
+If a backend integration is implemented, validate data on the server as well, keep secrets in environment variables, use secure authentication where required, and protect against duplicate submissions. Never expose private credentials in client-side code.
+
+## 15. ADD-TO-CALENDAR AND USEFUL INTERACTIONS
+
+Implement the following where practical:
+
+- Working registration CTAs throughout the website.
+- Schedule filters by Day 1 and Day 2.
+- Track detail interactions.
+- Functional FAQ accordions.
+- Mobile navigation.
+- Copy-to-clipboard support for relevant event links.
+- “Add to Calendar” functionality using a downloadable ICS file when a valid event date and event timezone have been configured.
+- Optional calendar integration for Google Calendar using a valid event URL.
+- Social sharing through native sharing support when available and copy-link fallback.
+- Clear empty states when optional details have not been configured.
+- Consistent success, error, disabled, hover, focus, and loading states.
+
+Never create buttons that look functional but do nothing. If a feature is unavailable, disable it appropriately or explain what information is needed.
+
+## 16. FAQ SECTION
+
+Create a searchable or expandable FAQ section with concise answers.
+
+Include:
+1. What is DEVSPRINT 36?
+2. Who can participate?
+3. Do I need previous hackathon experience?
+4. Can I register individually?
+5. What is the maximum team size?
+6. Can I use AI tools or public APIs?
+7. What should I bring?
+8. Will food and accommodation be provided?
+9. How are projects evaluated?
+10. What do I need to submit?
+11. Is attendance required for the entire event?
+12. How can I contact the organizers?
+
+Do not claim that food, accommodation, certificates, or equipment will be provided until confirmed. Use honest answers such as “Details will be announced by the organizers.”
+
+FAQ interactions must support keyboard navigation and accessible expanded/collapsed states.
+
+## 17. MENTORS, JUDGES, AND SPONSORS
+
+Create a reusable data-driven layout for mentors, judges, and sponsors, but do not invent people or organizations.
+
+When verified information has not been supplied:
+- Display a simple “Mentors and judges will be announced soon” message.
+- Provide a configurable section for future sponsor logos.
+- Do not display fake profile photographs, testimonials, corporate marks, or fabricated endorsements.
+- Keep the layout ready to populate with authentic information later.
+
+## 18. CONTACT AND SOCIAL MEDIA
+
+Heading:
+“Have a Question? Let's Build Together.”
+
+Provide editable contact information:
+- Club name.
+- Official contact email.
+- College or city.
+- Instagram URL.
+- LinkedIn URL.
+- GitHub URL.
+- Discord or community invite, when available.
+
+Use meaningful Lucide icons and accessible link labels.
+
+Read all contact and social URLs from configuration. Hide links whose URLs have not been supplied. Do not link buttons to “#” as a placeholder.
+
+Add a final CTA:
+
+“YOUR IDEA DESERVES TO BE BUILT.”
+
+Supporting text:
+“Find your track. Bring your curiosity. Build beyond limits.”
+
+Button:
+“Join DEVSPRINT 36 ↗”
+
+## 19. FOOTER
+
+Design a compact footer with:
+- DEVSPRINT 36 mark.
+- Short event description.
+- Anchor links to major sections.
+- Privacy policy link.
+- Official rules link.
+- Contact and social links.
+- Copyright year generated dynamically.
+- Organizer attribution using the configured official club name.
+
+Include a subtle closing line:
+“Designed for builders. Built for impact.”
+
+Do not imply official Google sponsorship or endorsement unless the organizer supplies accurate authorization and branding requirements.
+
+## 20. RESPONSIVE DESIGN
+
+The site must work exceptionally well on:
+- Mobile phones from 320px wide.
+- Common Android devices.
+- iPhones.
+- Tablets.
+- Laptops.
+- Large desktop displays.
+
+Requirements:
+- No unwanted horizontal scrolling.
+- Mobile-first form layouts.
+- Responsive headings with sensible maximum sizes.
+- Readable text at small sizes.
+- Stacked cards and timeline items on mobile.
+- Proper touch target sizing.
+- No cropped navigation or buttons.
+- Images and decorative visuals that scale correctly.
+- Timeline content that remains readable without zooming.
+- Mobile menu that cannot cover critical content permanently.
+
+Test at 320px, 375px, 768px, 1024px, and 1440px viewport widths.
+
+## 21. ANIMATIONS AND MICROINTERACTIONS
+
+Use motion selectively to make the experience feel refined.
+
+Suitable effects include:
+- Smooth entrance animations for major sections.
+- Short fade or slide transitions.
+- Subtle CTA hover states.
+- Animated countdown digits where useful.
+- Small decorative grid or line movement in the hero.
+- Card hover elevation.
+- Gentle timeline reveal animations.
+
+Respect the user's reduced-motion preference. Disable unnecessary animation when reduced motion is enabled.
+
+Do not use effects that delay navigation, reduce accessibility, or create motion sickness. The site must remain usable when animations are disabled.
+
+## 22. ACCESSIBILITY, SEO, AND PERFORMANCE
+
+ACCESSIBILITY
+- Use semantic HTML landmarks.
+- Maintain readable color contrast.
+- Give every input a visible label.
+- Support keyboard navigation throughout.
+- Include visible focus indicators.
+- Provide meaningful accessible names for icon buttons.
+- Make dialogs and accordions keyboard accessible.
+- Manage focus after opening or closing a modal.
+- Announce important form feedback accessibly.
+- Avoid conveying important status through color alone.
+
+SEO
+- Set a descriptive page title.
+- Write a meaningful meta description.
+- Set the theme color.
+- Add Open Graph metadata with an editable share-image URL.
+- Use an appropriate favicon.
+- Use meaningful headings in logical order.
+- Add the correct production canonical URL only when supplied.
+- Avoid indexing or exposing private registration information.
+
+PERFORMANCE
+- Optimize rendering and component sizes.
+- Avoid unnecessary re-renders.
+- Lazy-load nonessential images when appropriate.
+- Avoid oversized libraries.
+- Avoid layout shifts.
+- Do not make core functionality depend on an external image server.
+- Use CSS or SVG for decorative effects where practical.
+- Handle runtime and form errors gracefully.
+
+## 23. CODE ORGANIZATION
+
+Keep the project maintainable.
+
+Suggested structure:
+
+src/
+  components/
+    layout/
+      Navbar.tsx
+      Footer.tsx
+      MobileMenu.tsx
+    sections/
+      HeroSection.tsx
+      Countdown.tsx
+      AboutSection.tsx
+      TracksSection.tsx
+      ScheduleSection.tsx
+      PrizesSection.tsx
+      JudgingSection.tsx
+      RulesSection.tsx
+      MentorsSection.tsx
+      FAQSection.tsx
+      ContactSection.tsx
+      FinalCTA.tsx
+    registration/
+      RegistrationForm.tsx
+      RegistrationSteps.tsx
+      RegistrationReview.tsx
+      RegistrationSuccess.tsx
+    ui/
+      Button.tsx
+      Card.tsx
+      Accordion.tsx
+      Dialog.tsx
+      FormField.tsx
+  config/
+    event.ts
+  data/
+    tracks.ts
+    schedule.ts
+    prizes.ts
+    faqs.ts
+    rules.ts
+  lib/
+    validation.ts
+    registrationService.ts
+    calendar.ts
+    utils.ts
+  pages/
+    HomePage.tsx
+    RegisterPage.tsx
+  types/
+    event.ts
+  App.tsx
+  main.tsx
+  index.css
+
+Adapt this structure if the actual framework requires a different organization. Do not create empty components or files that serve no purpose.
+
+Centralize event-specific information in configuration/data files so organizers can change event dates, venue, contact information, deadlines, links, prize amounts, and schedules without editing multiple components.
+
+Use reusable UI components, TypeScript interfaces, and clear function names. Avoid giant single-file components and duplicated content.
+
+## 24. README AND SETUP DOCUMENTATION
+
+Provide a complete README containing:
+- Project overview.
+- Major website features.
+- Technology stack.
+- Prerequisites.
+- Installation instructions.
+- Development server command.
+- Production build command.
+- Preview command.
+- Project directory overview.
+- Where to edit event details.
+- How the countdown works.
+- How the registration form works.
+- Explanation of demo registration and local storage.
+- Instructions for connecting a real backend later.
+- Environment variable documentation, if applicable.
+- Deployment instructions for a suitable static hosting platform.
+- Accessibility and responsive-design notes.
+- Known limitations.
+
+Include only commands that match the actual project configuration.
+
+## 25. REQUIRED FUNCTIONALITY CHECKLIST
+
+Before considering the work complete, verify all of the following:
+
+[ ] The home page renders without errors.
+[ ] Navigation links lead to the correct sections.
+[ ] The mobile menu opens, navigates, and closes correctly.
+[ ] Registration can be completed in demo mode.
+[ ] Missing required fields trigger understandable validation errors.
+[ ] Invalid email addresses are rejected.
+[ ] Individual and team registrations show the appropriate fields.
+[ ] Team-size limits are enforced.
+[ ] The review step accurately reflects the form data.
+[ ] Successful demo registrations show a confirmation state.
+[ ] Duplicate submissions are handled sensibly.
+[ ] A configured countdown updates correctly.
+[ ] An unconfigured event date does not produce a fake countdown.
+[ ] The schedule displays all 36 hours consistently.
+[ ] Track cards show accurate descriptions and challenge details.
+[ ] Judging weights add up to 100%.
+[ ] FAQ items expand and collapse correctly.
+[ ] All external links have meaningful destinations.
+[ ] The calendar feature works when a valid date is configured.
+[ ] The website is usable on mobile, tablet, and desktop.
+[ ] The website has no unintended horizontal overflow.
+[ ] Keyboard interactions and visible focus states work.
+[ ] The console contains no avoidable runtime errors.
+[ ] The production build completes successfully.
+[ ] The README explains the project and setup process.
+
+## 26. IMPLEMENTATION EXPECTATIONS
+
+Work in the following order:
+
+1. Inspect the available project and identify the framework and existing dependencies.
+2. Establish the design system, layout, responsive grid, typography, and reusable UI components.
+3. Implement all landing-page sections with polished, consistent content.
+4. Implement registration validation, conditional form steps, and success/error states.
+5. Implement the countdown and calendar functions using configurable event data.
+6. Connect all navigation, track interactions, accordions, CTAs, and links.
+7. Test responsive behavior, accessibility, and important form edge cases.
+8. Run the available lint, type-check, and production-build commands.
+9. Fix errors rather than merely reporting them.
+10. Document how to configure, run, and deploy the project.
+
+Do not stop after producing a plan, wireframe, or code snippets. Implement the actual project files in the available workspace.
+
+If running in an environment that cannot directly edit files, provide the complete file contents and exact setup commands rather than claiming the website has been implemented.
+
+Do not leave core requirements as TODO comments. Where real event data or backend credentials are unavailable, implement a clearly labeled and usable demo state.
+
+## 27. FINAL QUALITY STANDARD
+
+The final website should feel like a real, thoughtfully designed university hackathon experience rather than a classroom assignment.
+
+Prioritize:
+- Distinctive visual identity.
+- A clear and memorable hero.
+- Easy discovery of tracks and schedules.
+- Transparent rules and judging.
+- A reliable registration experience.
+- Mobile-first usability.
+- Consistent content and interactions.
+- Clean and understandable code.
+- Honest handling of missing data and backend limitations.
+
+At the end of implementation, provide a concise summary of:
+1. Features implemented.
+2. Project structure.
+3. Commands to run the website.
+4. How to edit event information.
+5. Which features work in demo mode.
+6. Any remaining limitations or external configuration required.
+
+Now build DEVSPRINT 36 as a complete, polished, responsive, and functional hackathon website.
